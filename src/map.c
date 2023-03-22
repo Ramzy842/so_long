@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 19:49:38 by rchahban          #+#    #+#             */
-/*   Updated: 2023/03/10 22:09:45 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/03/19 12:51:22 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,12 +170,10 @@ int	map_surrounded_by_walls(char **map)
 
 int	path_is_valid(char **map)
 {
-	char **map_to_check;
 	int	x;
 
-	map_to_check = map;
 	x = 0;
-	while (map_to_check[x])
+	while (map[x])
 	{
 		
 		x++;
