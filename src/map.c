@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 19:49:38 by rchahban          #+#    #+#             */
-/*   Updated: 2023/03/22 07:44:30 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/03/26 21:00:20 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,12 @@ int	map_is_rectangular(char **map)
 			current_col_length = ft_strlen(map[x]);
 		if (current_col_length != initial_col_length)
 		{
-			printf("* map is not rectangular\n");
+			//printf("* map is not rectangular\n");
 			return (0);
 		}
 		x++;
 	}
-	printf("* map is rectangular\n");
+	// printf("* map is rectangular\n");
 	return (1);
 }
 
@@ -124,47 +124,58 @@ int	map_is_rectangular(char **map)
 		If it’s not, the program must return
 		an error. */
 
-int	map_surrounded_by_walls(char **map)
+int		map_surrounded_by_walls(char **map)
 {
 	int	x;
 	int	y;
-	int	rows;
-	int	length;
 
 	x = 0;
 	y = 0;
-	rows = ft_strlen_2d(map);
-	length = ft_strlen(map[0]) - 1;
-	// check that first and last lines are all filled with '1'
-	while (x < length)
+	// check that first line is all filled with '1's
+	while (x < 1)
 	{
-		if (map[0][x] != WALL)
+		while (map[x][y] && map[x][y] != '\n')
 		{
-			printf("first line isn't surrounded with walls\n");
+			if (map[x][y] != WALL)
+			{
+				//printf("first line isn't surrounded with walls\n");
+				return (0);
+			}
+			y++;
 		}
 		x++;
 	}
+	// check that the last line is all filled with '1's
 	x = 0;
-	while (x < length)
+	y = 0;
+	while (x < 1)
 	{
-		if (map[rows - 1][x] != WALL)
+		while (map[ft_strlen_2d(map) - 1][y] && map[ft_strlen_2d(map) - 1][y] != '\0')
 		{
-			printf("last line isn't surrounded with walls\n");
+			if (map[ft_strlen_2d(map) - 1][y] != WALL)
+			{
+				//printf("last line isn't surrounded with walls\n");
+				return (0);
+			}
+			y++;
 		}
 		x++;
 	}
 	// check that the lines in between start and end with '1'
 	x = 1;
-	while (x < rows - 1)
+	while (x < ft_strlen_2d(map) - 1)
 	{
-		if (map[x][0] != WALL || map[x][length - 1] != WALL)
+		if (map[x][0] != WALL || map[x][ft_strlen(map[x]) - 2] != WALL )
 		{
-			printf("the line %d is not surrounded by walls\n", x + 1);
+			//printf("the line %d is not surrounded by walls\n", x + 1);
+			return (0);
 		}
 		x++;
 	}
-	return 0;
+	return (1);
 }
+
+
 
 /* 5 - You have to check if there’s a valid path in the map. */
 
@@ -205,15 +216,15 @@ int is_empty(Stack *stack)
 	return (stack->top == NULL);
 }
 
-void get_next_moves(Stack *s, int a, int b, char **map)
+void get_next_moves(Stack *s, int a, int b, char **map, int rows, int cols)
 {
-	if (a > 0 && map[a - 1][b] != '1')
+	if (a > 0 && map[a - 1][b] != WALL)
 		push(s, a - 1, b);
-	if (b < 6 && map[a][b + 1] != '1' )
+	if (b < cols && map[a][b + 1] != WALL)
 		push(s, a, b + 1);
-	if (a < 5 && map[a + 1][b] != '1')
+	if (a < rows && map[a + 1][b] != WALL)
 		push(s, a + 1, b);
-	if (b > 0 && map[a][b - 1] != '1')
+	if (b > 0 && map[a][b - 1] != WALL)
 		push(s, a, b - 1);
 }
 
@@ -235,7 +246,7 @@ Node *pop(Stack *stack)
 	y = stack->top->y;
 	temp = stack->top;
 	stack->top = stack->top->next;
-	printf("popped [%d][%d]\n", temp->x, temp->y);
+	//printf("popped [%d][%d]\n", temp->x, temp->y);
 	return temp;
 }
 
@@ -244,9 +255,7 @@ void peek(Stack *stack)
 	if (is_empty(stack))
 		printf("Stack is empty!\n");
 	else
-	{
 		printf("top value is: [%d][%d]\n", stack->top->x, stack->top->y);
-	}
 }
 
 
@@ -283,7 +292,8 @@ void display_stack(Stack *stack)
 int in_visited(Stack *visited, int a, int b)
 {
 	if (is_empty(visited))
-		printf("Visited Stack is Empty!\n");
+		// printf("Visited Stack is Empty!\n");
+		return (0);
 	else {
 		Node *temp = malloc(sizeof(Node));
 		temp = visited->top;
@@ -297,7 +307,30 @@ int in_visited(Stack *visited, int a, int b)
 	return (0);
 }
 
-void	path_is_valid(char **map)
+int count_collectibles(char **map)
+{
+	int	x;
+	int	y;
+	int	collectibles;
+
+	x = 0;
+	y = 0;
+	collectibles = 0;
+	while(map[x])
+	{
+		y = 0;
+		while(map[x][y])
+		{
+			if (map[x][y] == COLLECTIBLE)
+				collectibles++;
+			y++;
+		}
+		x++;
+	}
+	return (collectibles);
+}
+
+int	path_is_valid(char **map)
 {
 	// start from player position
 // push coordinates and pop it
@@ -313,12 +346,42 @@ void	path_is_valid(char **map)
 
 	Stack *s = create_stack();
 	Stack *visited = create_stack();
+	Stack *collectibles_stack = create_stack();
 
-	int start_x = 1;
-	int start_y = 5;
-	int exit_x = 1;
-	int exit_y = 2;
-
+	int start_x;
+	int start_y;
+	int exit_x;
+	int exit_y;
+	int rows;
+	int cols;
+	
+	rows = ft_strlen_2d(map);
+	cols = ft_strlen(map[0]) - 1;
+	
+	int m;
+	int n;
+	
+	m = 0;
+	while(map[m] != NULL)
+	{
+		n = 0;
+		while (map[m][n] != '\0')
+		{
+			if(map[m][n] == 'P')
+			{
+				start_x = m;
+				start_y = n;
+			}
+			if(map[m][n] == 'E')
+			{
+				exit_x = m;
+				exit_y = n;
+			}
+			n++;
+		}
+		m++;
+	}
+	// Part 1: Exit detection
 	int x = 0;
 	int y = 0;
 	int exit_found = 0;
@@ -342,24 +405,78 @@ void	path_is_valid(char **map)
 				exit_found++;
 				break;
 			}
-			printf("-----------------\n");
-			get_next_moves(s, x, y, map);
+			//printf("-----------------\n");
+			get_next_moves(s, x, y, map, rows, cols);
 		}
 	}
+
+	free(visited);
+	visited = NULL;
+	visited = create_stack();
+
+	// Part 2: Collectibles detection
+	x = 0;
+	y = 0;
+	int number_of_collectibles = 0;
+	int collectibles_found = 0;
 	
-	display_stack(s);
-	printf("----------\n");
-	display_stack(visited);
-	printf("----------\n");
-	if (exit_found)
-		printf("path to E found!\n");
-	else
-		printf("path to E was not found!\n");
+	m = 0;
+	push(collectibles_stack, start_x, start_y);
+	while(map[m] != NULL)
+	{
+		n = 0;
+		while (map[m][n] != '\0')
+		{
+			if(map[m][n] == COLLECTIBLE)
+			{
+				number_of_collectibles++;
+			}
+			n++;
+		}
+		m++;
+	}
+		while (!is_empty(collectibles_stack))
+		{
+			Node *popped = pop(collectibles_stack);
+			if (popped != NULL) {
+    			x = popped->x;
+    			y = popped->y;
+			}
+			if (in_visited(visited, x, y))
+				continue;
+			else
+			{
+				push(visited, x, y);
+				if (in_visited(visited, x, y) && map[x][y] == COLLECTIBLE)
+					collectibles_found++;
+				if (collectibles_found == number_of_collectibles)
+					break;
+				//printf("-----------------\n");
+				get_next_moves(collectibles_stack, x, y, map, rows, cols);
+			}
+		}
+	
+	
+	//printf("* collectibles found: %d\n", collectibles_found);
+	//printf("* number of collectibles: %d\n", number_of_collectibles);
+	//display_stack(s);
+	//printf("----------\n");
+	//display_stack(visited);
+	//printf("----------\n");
 	free(s);
 	free(visited);
+	free(collectibles_stack);
 	s = NULL;
 	visited = NULL;
+	collectibles_stack = NULL;
+	if (exit_found && number_of_collectibles == collectibles_found)
+		// printf("* Path is Valid!\n");
+		return (1);
+	else
+		//printf("* Path is not Valid!\n");
+		return (0);
 }
+
 
 /* 6 - If the map contains a duplicates characters (exit/start),
 	you should display an error message. */

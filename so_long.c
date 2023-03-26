@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 03:57:29 by rchahban          #+#    #+#             */
-/*   Updated: 2023/03/22 07:44:11 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/03/26 21:01:04 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(int argc, char **argv)
 		}
 		x++;
 	}
-	if (check_mandatory_conditions(map) == 1)
+	printf("\n");
+	/* if (check_mandatory_conditions(map) == 1)
 		printf("\n* mandatory conditions achieved!\n");
 	else
 		printf("\n* mandatory conditions are not achieved!\n");
@@ -43,7 +44,13 @@ int	main(int argc, char **argv)
 	else if (count_players_number(map) == 0)
 		printf("* Player Count is Wrong\n");
 	map_surrounded_by_walls(map);
-	
+	path_is_valid(map); */
+	if (check_mandatory_conditions(map) && map_is_rectangular(map) 
+	&& count_players_number(map) && map_surrounded_by_walls(map) 
+	&& path_is_valid(map))
+		printf("map is valid!\n");
+	else
+		printf("map is not valid!\n");
 	free(map);
 	return (0);
 }
