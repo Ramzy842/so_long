@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 03:49:25 by rchahban          #+#    #+#             */
-/*   Updated: 2023/03/04 00:11:15 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/03/22 07:44:54 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ int		map_is_rectangular(char **map);
 int		ft_strlen_2d(char **map);
 int		count_players_number(char **map);
 int		map_surrounded_by_walls(char **map);
+void	path_is_valid(char **map);
 #endif

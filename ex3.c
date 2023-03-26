@@ -117,28 +117,8 @@ int in_visited(Stack *visited, int a, int b)
 	return (0);
 }
 
-// start from player position
-// push coordinates and pop it
-	// check if the popped coordinates is in the visited nodes stack
-	// if so ignore coordinates and pop next coordinates in stack
-	// else continue
-	// put coordinates in visited stack
-	// check if the coordinates are the Exit
-		// if true --> print path is valid
-// else 
-// add adjacent coordinates to stack
-// recurse from step 1
 
 
-int is_legal_move(int x, int y)
-{
-	
-}
-
-/* void dfs(Stack *s, Stack *v, int a, int b)
-{
-	
-} */
 
 void get_next_moves(Stack *s, int a, int b, char **map)
 {
