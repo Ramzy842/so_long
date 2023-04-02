@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 08:01:53 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/01 02:41:13 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/02 17:43:52 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,79 +15,86 @@
 
 typedef struct Node
 {
-	int x;
-	int y;
-	struct Node *next;
-} Node;
+	int				x;
+	int				y;
+	struct Node		*next;
+}	t_Node;
 
 typedef struct Stack
 {
-	Node *top;
-} Stack;
+	t_Node	*top;
+}	t_Stack;
 
-void push(Stack *stack ,int x, int y)
+void	push(t_Stack *stack, int x, int y)
 {
-	Node *newNode = malloc(sizeof(Node));
-	if (newNode == NULL) {
-        printf("Memory allocation failed\n");
-        return;
-    }
-	newNode->x = x;
-	newNode->y = y;
-	newNode->next = stack->top;
-	stack->top = newNode;
+	t_Node	*new_node;
+
+	new_node = malloc(sizeof(t_Node));
+	if (new_node == NULL)
+		return ;
+	new_node->x = x;
+	new_node->y = y;
+	new_node->next = stack->top;
+	stack->top = new_node;
 }
 
-Stack *create_stack()
+t_Stack	*create_stack(void)
 {
-	Stack *stack = malloc(sizeof(Stack));
+	t_Stack	*stack;
+
+	stack = malloc(sizeof(t_Stack));
 	stack->top = NULL;
 	return (stack);
 }
 
-int is_empty(Stack *stack)
+int	is_empty(t_Stack *stack)
 {
 	return (stack->top == NULL);
 }
 
-void get_next_moves(Stack *s, int a, int b, char **map, int rows, int cols, char goal)
+void	get_next_moves(t_Stack *s, int a, int b, char goal)
 {
 	if (goal == EXIT)
 	{
-		if (a > 0 && map[a - 1][b] != WALL)
+		if (a > 0 && g_game.map[a - 1][b] != WALL)
 			push(s, a - 1, b);
-		if (b < cols && map[a][b + 1] != WALL)
+		if (b < g_properties.map_cols && g_game.map[a][b + 1] != WALL)
 			push(s, a, b + 1);
-		if (a < rows && map[a + 1][b] != WALL)
+		if (a < g_properties.map_rows && g_game.map[a + 1][b] != WALL)
 			push(s, a + 1, b);
-		if (b > 0 && map[a][b - 1] != WALL)
+		if (b > 0 && g_game.map[a][b - 1] != WALL)
 			push(s, a, b - 1);
 	}
 	else
 	{
-		if (a > 0 && (map[a - 1][b] != WALL && map[a - 1][b] != EXIT))
+		if (a > 0 && (g_game.map[a - 1][b] != WALL
+			&& g_game.map[a - 1][b] != EXIT))
 			push(s, a - 1, b);
-		if (b < cols && (map[a][b + 1] != WALL &&  map[a][b + 1] != EXIT))
+		if (b < g_properties.map_cols
+			&& (g_game.map[a][b + 1] != WALL
+			&& g_game.map[a][b + 1] != EXIT))
 			push(s, a, b + 1);
-		if (a < rows && (map[a + 1][b] != WALL && map[a + 1][b] != EXIT))
+		if (a < g_properties.map_rows
+			&& (g_game.map[a + 1][b] != WALL
+			&& g_game.map[a + 1][b] != EXIT))
 			push(s, a + 1, b);
-		if (b > 0 && (map[a][b - 1] != WALL && map[a][b - 1] != EXIT))
+		if (b > 0 && (g_game.map[a][b - 1] != WALL
+			&& g_game.map[a][b - 1] != EXIT))
 			push(s, a, b - 1);
 	}
 }
 
-Node *pop(Stack *stack)
+t_Node	*pop(t_Stack *stack)
 {
-	int x;
-	int y;
+	t_Node	*temp;
+	int		x;
+	int		y;
 
-	if (is_empty(stack)) {
-		return NULL;
-    }
-	Node *temp = malloc(sizeof(Node));
-	if (temp == NULL) {
-    	return NULL;
-	}
+	if (is_empty(stack))
+		return (NULL);
+	temp = malloc(sizeof(t_Node));
+	if (temp == NULL)
+		return (NULL);
 	x = stack->top->x;
 	y = stack->top->y;
 	temp = stack->top;
@@ -95,15 +102,17 @@ Node *pop(Stack *stack)
 	return (temp);
 }
 
-void display_stack(Stack *stack)
+void	display_stack(t_Stack *stack)
 {
-	int x;
+	t_Node	*temp;
+	int		x;
 
 	x = 0;
 	if (is_empty(stack))
 		printf("Stack is Empty!\n");
-	else {
-		Node *temp = malloc(sizeof(Node));
+	else
+	{
+		temp = malloc(sizeof(t_Node));
 		temp = stack->top;
 		while (temp != NULL)
 		{
@@ -114,12 +123,15 @@ void display_stack(Stack *stack)
 	}
 }
 
-int in_visited(Stack *visited, int a, int b)
+int	in_visited(t_Stack	*visited, int a, int b)
 {
+	t_Node	*temp;
+
 	if (is_empty(visited))
 		return (0);
-	else {
-		Node *temp = malloc(sizeof(Node));
+	else
+	{
+		temp = malloc(sizeof(t_Node));
 		temp = visited->top;
 		while (temp != NULL)
 		{
@@ -131,7 +143,7 @@ int in_visited(Stack *visited, int a, int b)
 	return (0);
 }
 
-int count_collectibles(char **map)
+int	count_collectibles(char **map)
 {
 	int	x;
 	int	y;
@@ -140,10 +152,10 @@ int count_collectibles(char **map)
 	x = 0;
 	y = 0;
 	collectibles = 0;
-	while(map[x])
+	while (map[x])
 	{
 		y = 0;
-		while(map[x][y])
+		while (map[x][y])
 		{
 			if (map[x][y] == COLLECTIBLE)
 				collectibles++;
@@ -154,26 +166,26 @@ int count_collectibles(char **map)
 	return (collectibles);
 }
 
-void assign_point(char **map, int *start_x, int *start_y, int *exit_x, int *exit_y)
+void	assign_point(void)
 {
-	int x;
-	int y;
-	
+	int	x;
+	int	y;
+
 	x = 0;
-	while(map[x] != NULL)
+	while (g_game.map[x] != NULL)
 	{
 		y = 0;
-		while (map[x][y] != '\0')
+		while (g_game.map[x][y] != '\0')
 		{
-			if(map[x][y] == 'P')
+			if (g_game.map[x][y] == 'P')
 			{
-				*start_x = x;
-				*start_y = y;
+				g_game.player_x = x;
+				g_game.player_y = y;
 			}
-			if(map[x][y] == 'E')
+			if (g_game.map[x][y] == 'E')
 			{
-				*exit_x = x;
-				*exit_y = y;
+				g_game.exit_x = x;
+				g_game.exit_y = y;
 			}
 			y++;
 		}
@@ -181,84 +193,93 @@ void assign_point(char **map, int *start_x, int *start_y, int *exit_x, int *exit
 	}
 }
 
-int	path_is_valid(char **map, int cols, int rows)
+int	path_is_valid(char **map)
 {
-	Stack *s = create_stack();
-	Stack *visited = create_stack();
-	Stack *collectibles_stack = create_stack();
+	t_Stack	*s;
+	t_Stack	*visited;
+	t_Stack	*collectibles_stack;
+	t_Node	*popped;
+	int		x;
+	int		y;
+	int		exit_found;
+	int		collectibles_found;
 
-	assign_point(map, &(game.player_x), &(game.player_y), &(game.exit_x), &(game.exit_y));
-	// Part 1: Exit detection
-	if (map[game.exit_x + 1][game.exit_y] == WALL && map[game.exit_x - 1][game.exit_y] == WALL
-		&& map[game.exit_x][game.exit_y + 1] == WALL && map[game.exit_x][game.exit_y - 1] == WALL
+	s = create_stack();
+	visited = create_stack();
+	collectibles_stack = create_stack();
+	x = 0;
+	y = 0;
+	exit_found = 0;
+	collectibles_found = 0;
+	assign_point();
+	if (map[g_game.exit_x + 1][g_game.exit_y] == WALL
+		&& map[g_game.exit_x - 1][g_game.exit_y] == WALL
+		&& map[g_game.exit_x][g_game.exit_y + 1] == WALL
+		&& map[g_game.exit_x][g_game.exit_y - 1] == WALL
 	)
 		return (0);
-	if (((map[game.exit_x][game.exit_y - 1] == PLAYER && map[game.exit_x][game.exit_y + 1] == COLLECTIBLE) ||
-	 	(map[game.exit_x][game.exit_y + 1] == PLAYER && map[game.exit_x][game.exit_y - 1] == COLLECTIBLE)) &&
-		rows <= 3)
+	if (((map[g_game.exit_x][g_game.exit_y - 1] == PLAYER
+			&& map[g_game.exit_x][g_game.exit_y + 1] == COLLECTIBLE)
+			|| (map[g_game.exit_x][g_game.exit_y + 1] == PLAYER
+			&& map[g_game.exit_x][g_game.exit_y - 1] == COLLECTIBLE))
+			&& g_properties.map_rows <= 3)
 		return (0);
-	int x = 0;
-	int y = 0;
-	int exit_found = 0;
-
-	push(s, game.player_x, game.player_y);
+	push(s, g_game.player_x, g_game.player_y);
 	while (!is_empty(s))
 	{
-		Node *popped = pop(s);
-		if (popped != NULL) {
-    		x = popped->x;
-    		y = popped->y;
+		popped = pop(s);
+		if (popped != NULL)
+		{
+			x = popped->x;
+			y = popped->y;
 		}
 		if (in_visited(visited, x, y))
-			continue;
+			continue ;
 		else
 		{
 			push(visited, x, y);
-			if (in_visited(visited, game.exit_x, game.exit_y))
+			if (in_visited(visited, g_game.exit_x, g_game.exit_y))
 			{
 				exit_found++;
-				break;
+				break ;
 			}
-			get_next_moves(s, x, y, map, rows, cols, EXIT);
+			get_next_moves(s, x, y, EXIT);
 		}
 	}
 	free(visited);
 	visited = NULL;
 	visited = create_stack();
-
-	// Part 2: Collectibles detection
 	x = 0;
 	y = 0;
-	properties.collectibles = count_collectibles(map);
-	int collectibles_found = 0;
-	push(collectibles_stack, game.player_x, game.player_y);
-	
-		while (!is_empty(collectibles_stack))
+	g_properties.collectibles = count_collectibles(map);
+	push(collectibles_stack, g_game.player_x, g_game.player_y);
+	while (!is_empty(collectibles_stack))
+	{
+		popped = pop(collectibles_stack);
+		if (popped != NULL)
 		{
-			Node *popped = pop(collectibles_stack);
-			if (popped != NULL) {
-    			x = popped->x;
-    			y = popped->y;
-			}
-			if (in_visited(visited, x, y))
-				continue;
-			else
-			{
-				push(visited, x, y);
-				if (in_visited(visited, x, y) && map[x][y] == COLLECTIBLE)
-					collectibles_found++;
-				if (collectibles_found == properties.collectibles)
-					break;
-				get_next_moves(collectibles_stack, x, y, map, rows, cols,COLLECTIBLE);
-			}
+			x = popped->x;
+			y = popped->y;
 		}
+		if (in_visited(visited, x, y))
+			continue ;
+		else
+		{
+			push(visited, x, y);
+			if (in_visited(visited, x, y) && map[x][y] == COLLECTIBLE)
+				collectibles_found++;
+			if (collectibles_found == g_properties.collectibles)
+				break ;
+			get_next_moves(collectibles_stack, x, y, COLLECTIBLE);
+		}
+	}
 	free(s);
 	free(visited);
 	free(collectibles_stack);
 	s = NULL;
 	visited = NULL;
 	collectibles_stack = NULL;
-	if (exit_found && properties.collectibles == collectibles_found)
+	if (exit_found && g_properties.collectibles == collectibles_found)
 		return (1);
 	else
 		return (0);

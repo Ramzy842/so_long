@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 19:49:38 by rchahban          #+#    #+#             */
-/*   Updated: 2023/03/31 08:39:32 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/02 17:49:02 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,39 +57,31 @@ char	**read_map(char *map_path)
 		at least 1 collectible, 
 		and 1 starting position to
 		be valid.*/
-int	check_mandatory_conditions(char **map)
+int	check_mandatory_conditions(char **map, int *exit_count, int *player_count)
 {
 	int	x;
 	int	y;
-	int	player_found;
 	int	collectible_found;
-	int	exit_found;
 
 	x = 0;
 	y = 0;
-	player_found = 0;
 	collectible_found = 0;
-	exit_found = 0;
-	while(map[x])
+	while (map[x])
 	{
 		y = 0;
-		while(map[x][y])
+		while (map[x][y])
 		{
-			if (map[x][y] ==  PLAYER)
-				player_found++;
+			if (map[x][y] == PLAYER)
+				(*player_count)++;
 			if (map[x][y] == EXIT)
-				exit_found++;
+				(*exit_count)++;
 			if (map[x][y] == COLLECTIBLE)
 				collectible_found++;
 			y++;
 		}
 		x++;
 	}
-	if (exit_found != 1)
-		printf("* Didn't find 1 Exit only!\n");
-	if (player_found != 1)
-		printf("* Didn't find 1 Player only!\n");
-	if (exit_found == 1 && player_found == 1 && collectible_found >= 1)
+	if (*exit_count == 1 && *player_count == 1 && collectible_found >= 1)
 		return (1);
 	return (0);
 }
@@ -98,9 +90,9 @@ int	check_mandatory_conditions(char **map)
 
 int	map_is_rectangular(char **map, int cols)
 {
-	int x;
-	int initial_col_length;
-	int current_col_length;
+	int	x;
+	int	initial_col_length;
+	int	current_col_length;
 
 	x = 0;
 	initial_col_length = cols;
@@ -122,39 +114,23 @@ int	map_is_rectangular(char **map, int cols)
 		If it’s not, the program must return
 		an error. */
 
-int		map_surrounded_by_walls(char **map)
+int	map_surrounded_by_walls(char **map)
 {
 	int	x;
 	int	y;
 
 	x = 0;
 	y = 0;
-	while (x < 1)
-	{
-		while (map[x][y] && map[x][y] != '\n')
-		{
-			if (map[x][y] != WALL)
-				return (0);
-			y++;
-		}
-		x++;
-	}
+	if (!handle_first_line(map, &x, &y))
+		return (0);
 	x = 0;
 	y = 0;
-	while (x < 1)
-	{
-		while (map[ft_strlen_2d(map) - 1][y] && map[ft_strlen_2d(map) - 1][y] != '\0')
-		{
-			if (map[ft_strlen_2d(map) - 1][y] != WALL)
-				return (0);
-			y++;
-		}
-		x++;
-	}
+	if (!handle_last_line(map, &x, &y))
+		return (0);
 	x = 1;
 	while (x < ft_strlen_2d(map) - 1)
 	{
-		if (map[x][0] != WALL || map[x][ft_strlen(map[x]) - 2] != WALL )
+		if (map[x][0] != WALL || map[x][ft_strlen(map[x]) - 2] != WALL)
 			return (0);
 		x++;
 	}
