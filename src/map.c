@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 19:49:38 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/02 17:49:02 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/03 22:07:02 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ char	**read_map(char *map_path)
 	while (line)
 	{
 		row_count++;
+		free(line);
 		line = get_next_line(fd);
 	}
+	free(line);
 	map = malloc(row_count * sizeof(char *) + 1);
 	map[row_count] = NULL;
 	close(fd);

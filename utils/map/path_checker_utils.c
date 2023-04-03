@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:55:37 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/02 18:30:25 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:08:43 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,15 @@ void	get_next_moves(t_Stack *s, int a, int b, char goal)
 t_Node	*pop(t_Stack *stack)
 {
 	t_Node	*temp;
-	int		x;
-	int		y;
 
 	if (is_empty(stack))
 		return (NULL);
+	free(stack->top);
 	temp = malloc(sizeof(t_Node));
 	if (temp == NULL)
 		return (NULL);
-	x = stack->top->x;
-	y = stack->top->y;
 	temp = stack->top;
 	stack->top = stack->top->next;
+	temp->next = NULL;
 	return (temp);
 }

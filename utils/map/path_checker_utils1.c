@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_checker_utils2.c                              :+:      :+:    :+:   */
+/*   path_checker_utils1.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:55:37 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/02 18:31:56 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/03 22:04:47 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ int	in_visited(t_Stack	*visited, int a, int b)
 		while (temp != NULL)
 		{
 			if (a == temp->x && b == temp->y)
+			{
 				return (1);
+			}
 			temp = temp->next;
 		}
-	}	
+	}
 	return (0);
 }

@@ -5,7 +5,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 # Define the source files for the so_long executable
-SRC = so_long.c ./src/map.c ./utils/main/movement.c ./utils/main/so_long_utils.c ./utils/main/so_long_utils1.c ./utils/map/map_utils.c ./utils/map/path_checker_utils.c ./utils/map/path_checker_utils1.c ./utils/map/path_checker_utils2.c ./utils/map/path_checker.c get_next_line.c get_next_line_utils.c
+SRC = so_long.c ./src/map.c ./utils/main/movement.c ./utils/main/ft_putnbr.c ./utils/main/so_long_utils.c ./utils/main/so_long_utils1.c ./utils/map/map_utils.c ./utils/map/path_checker_utils.c ./utils/map/path_checker_utils1.c ./utils/map/path_checker_utils2.c ./utils/map/path_checker.c get_next_line.c get_next_line_utils.c
 
 # Define the object files for the so_long executable, generated from the source files
 OBJ = $(SRC:.c=.o)

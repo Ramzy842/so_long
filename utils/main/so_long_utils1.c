@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:56:39 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/02 22:12:26 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:37:52 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	display_errors(void)
 {
 	write(1, "Error\n", 6);
 	if (g_properties.exit_count > 1)
-		printf("* Didn't find 1 Exit only!\n");
+		write(1, "* Didn't find 1 Exit only!\n", 27);
 	if (g_properties.player_count > 1)
-		printf("* Didn't find 1 Player only!\n");
-	printf("--- map is not valid! ---\n");
+		write(1, "* Didn't find 1 Player only!\n", 29);
+	write(1, "--- map is not valid! ---\n", 26);
 }

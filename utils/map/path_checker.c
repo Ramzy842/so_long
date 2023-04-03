@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 08:01:53 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/02 20:19:48 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/03 22:31:18 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	search_exit(t_Stack *s, t_Stack *visited,
 			x = popped->x;
 			y = popped->y;
 		}
+		free(popped);
 		if (in_visited(visited, x, y))
 			continue ;
 		else
@@ -56,6 +57,7 @@ void	search_collectibles(t_Stack *collectibles_stack,
 			x = popped->x;
 			y = popped->y;
 		}
+		free_nodes(popped);
 		if (in_visited(visited, x, y))
 			continue ;
 		else
@@ -77,9 +79,10 @@ int	exit_path(t_Stack *s, t_Stack *visited, t_Node *popped)
 	exit_found = 0;
 	push(s, g_game.player_x, g_game.player_y);
 	search_exit(s, visited, popped, &exit_found);
-	free(visited);
+	free_stack(s);
+	free_stack(visited);
+	s = NULL;
 	visited = NULL;
-	visited = create_stack();
 	return (exit_found);
 }
 
@@ -93,12 +96,13 @@ int	collectible_path(t_Stack *collectibles_stack,
 	x = 0;
 	y = 0;
 	collectibles_found = 0;
+	visited = create_stack();
 	g_properties.collectibles = count_collectibles(g_game.map);
 	push(collectibles_stack, g_game.player_x, g_game.player_y);
 	search_collectibles(collectibles_stack, visited,
 		popped, &collectibles_found);
-	free(visited);
-	free(collectibles_stack);
+	free_stack(visited);
+	free_stack(collectibles_stack);
 	visited = NULL;
 	collectibles_stack = NULL;
 	if (g_properties.collectibles == collectibles_found)
@@ -117,6 +121,7 @@ int	path_is_valid(char **map)
 	visited = create_stack();
 	collectibles_stack = create_stack();
 	popped = NULL;
+	free_nodes(popped);
 	assign_point();
 	if (!handle_exit_surrounded_by_walls(map))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:21:17 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/02 22:04:40 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/03 02:45:49 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,17 @@ void	end_game(int game_finished, int steps)
 {
 	(game_finished)++;
 	(steps)++;
-	printf("Movement count: %d\n", steps);
-	printf("You win!\n");
+	write(1, "Movement count: ", 16);
+	ft_putnbr(steps);
+	write(1, "\n", 1);
+	write(1, "You win!\n", 10);
 	mlx_destroy_window(g_vars.mlx, g_vars.img);
+	mlx_destroy_image(g_vars.mlx, g_vars.collectible);
+	mlx_destroy_image(g_vars.mlx, g_vars.exit);
+	mlx_destroy_image(g_vars.mlx, g_vars.floor);
+	mlx_destroy_image(g_vars.mlx, g_vars.player);
+	mlx_destroy_image(g_vars.mlx, g_vars.wall);
+	free_map(g_game.map, g_properties.map_rows);
 	exit(0);
 	return ;
 }
@@ -43,7 +51,9 @@ void	move_up(int *steps, int *found_collectibles, int *game_finished)
 		g_game.player_x -= 1;
 		(g_game.map)[g_game.player_x][g_game.player_y] = PLAYER;
 		build_map(g_game.map, g_vars.mlx);
-		printf("Movement count: %d\n", *steps);
+		write(1, "Movement count: ", 16);
+		ft_putnbr(*steps);
+		write(1, "\n", 1);
 	}
 }
 
@@ -66,7 +76,9 @@ void	move_right(int *steps, int *found_collectibles, int *game_finished)
 		g_game.player_y += 1;
 		(g_game.map)[g_game.player_x][g_game.player_y] = PLAYER;
 		build_map(g_game.map, g_vars.mlx);
-		printf("Movement count: %d\n", *steps);
+		write(1, "Movement count: ", 16);
+		ft_putnbr(*steps);
+		write(1, "\n", 1);
 	}
 }
 
@@ -89,7 +101,9 @@ void	move_down(int *steps, int *found_collectibles, int *game_finished)
 		g_game.player_x += 1;
 		(g_game.map)[g_game.player_x][g_game.player_y] = PLAYER;
 		build_map(g_game.map, g_vars.mlx);
-		printf("Movement count: %d\n", *steps);
+		write(1, "Movement count: ", 16);
+		ft_putnbr(*steps);
+		write(1, "\n", 1);
 	}
 }
 
@@ -112,6 +126,8 @@ void	move_left(int *steps, int *found_collectibles, int *game_finished)
 		g_game.player_y -= 1;
 		(g_game.map)[g_game.player_x][g_game.player_y] = PLAYER;
 		build_map(g_game.map, g_vars.mlx);
-		printf("Movement count: %d\n", *steps);
+		write(1, "Movement count: ", 16);
+		ft_putnbr(*steps);
+		write(1, "\n", 1);
 	}
 }

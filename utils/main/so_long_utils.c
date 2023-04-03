@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:56:39 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/02 22:11:08 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/03 22:40:02 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,13 @@ int	key_hook(int keycode, t_vars *g_vars)
 	if (keycode == 53)
 	{
 		mlx_destroy_window(g_vars->mlx, g_vars->img);
+		mlx_destroy_image(g_vars->mlx, g_vars->collectible);
+		mlx_destroy_image(g_vars->mlx, g_vars->exit);
+		mlx_destroy_image(g_vars->mlx, g_vars->floor);
+		mlx_destroy_image(g_vars->mlx, g_vars->player);
+		mlx_destroy_image(g_vars->mlx, g_vars->wall);
+		free(g_vars->mlx);
+		free_map(g_game.map, g_properties.map_rows);
 		exit(0);
 	}
 	if (keycode == 13 || keycode == 126)
@@ -99,5 +106,13 @@ int	handle_destroy_event(int keycode, void *param)
 {
 	(void) keycode;
 	(void) param;
+	mlx_destroy_window(g_vars.mlx, g_vars.img);
+	mlx_destroy_image(g_vars.mlx, g_vars.collectible);
+	mlx_destroy_image(g_vars.mlx, g_vars.exit);
+	mlx_destroy_image(g_vars.mlx, g_vars.floor);
+	mlx_destroy_image(g_vars.mlx, g_vars.player);
+	mlx_destroy_image(g_vars.mlx, g_vars.wall);
+	free(g_vars.mlx);
+	free_map(g_game.map, g_properties.map_rows);
 	exit (0);
 }

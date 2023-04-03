@@ -6,16 +6,14 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 03:49:25 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/02 22:14:55 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/03 22:28:23 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
 # include <mlx.h>
 
 # define COLLECTIBLE 'C'
@@ -50,7 +48,7 @@ typedef struct s_vars {
 	void	*collectible;
 	void	*player;
 	void	*exit;
-}				t_vars;
+}	t_vars;
 
 typedef struct Node
 {
@@ -65,7 +63,6 @@ typedef struct Stack
 }	t_Stack;
 
 t_vars		g_vars;
-
 t_Props		g_properties;
 t_Game		g_game;
 
@@ -101,4 +98,8 @@ int		valid_extension(char *path);
 void	initialize_g_properties(char *map_path);
 void	start_game(void);
 void	display_errors(void);
+void	ft_putnbr(int n);
+void	free_map(char **map, int row_count);
+void	free_stack(t_Stack *stack);
+void	free_nodes(t_Node *head);
 #endif
