@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:55:37 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/03 22:04:47 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/04 20:08:05 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	in_visited(t_Stack	*visited, int a, int b)
 		return (0);
 	else
 	{
-		temp = malloc(sizeof(t_Node));
 		temp = visited->top;
 		while (temp != NULL)
 		{

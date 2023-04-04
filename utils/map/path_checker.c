@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 08:01:53 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/03 22:31:18 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/04 20:22:33 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	search_exit(t_Stack *s, t_Stack *visited,
 		{
 			x = popped->x;
 			y = popped->y;
+			free(popped);
 		}
-		free(popped);
 		if (in_visited(visited, x, y))
 			continue ;
 		else
@@ -56,8 +56,8 @@ void	search_collectibles(t_Stack *collectibles_stack,
 		{
 			x = popped->x;
 			y = popped->y;
+			free(popped);
 		}
-		free_nodes(popped);
 		if (in_visited(visited, x, y))
 			continue ;
 		else
@@ -129,7 +129,10 @@ int	path_is_valid(char **map)
 		return (0);
 	if (exit_path(s, visited, popped)
 		&& collectible_path(collectibles_stack, visited, popped))
+		{
 		return (1);
+			
+		}
 	else
 		return (0);
 }
