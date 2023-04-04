@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 03:57:29 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/04 19:59:10 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/04 21:11:27 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ int	main(int argc, char **argv)
 		start_game();
 	else
 		display_errors();
-	//cleanup();
+	cleanup();
 	return (0);
 }

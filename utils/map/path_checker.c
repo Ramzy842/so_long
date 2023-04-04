@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 08:01:53 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/04 20:22:33 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/04 21:10:39 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ int	path_is_valid(char **map)
 	visited = create_stack();
 	collectibles_stack = create_stack();
 	popped = NULL;
-	free_nodes(popped);
 	assign_point();
 	if (!handle_exit_surrounded_by_walls(map))
 		return (0);
@@ -129,10 +128,10 @@ int	path_is_valid(char **map)
 		return (0);
 	if (exit_path(s, visited, popped)
 		&& collectible_path(collectibles_stack, visited, popped))
-		{
+	{
+		free_nodes(popped);
 		return (1);
-			
-		}
+	}
 	else
 		return (0);
 }
