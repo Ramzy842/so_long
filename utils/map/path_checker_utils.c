@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:55:37 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/04 20:04:07 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/05 02:17:19 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,9 @@ t_Node	*pop(t_Stack *stack)
 
 	if (is_empty(stack))
 		return (NULL);
-	free(stack->top);
-	temp = malloc(sizeof(t_Node));
+	temp = stack->top;
 	if (temp == NULL)
 		return (NULL);
-	temp = stack->top;
 	stack->top = stack->top->next;
 	temp->next = NULL;
 	return (temp);

@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:56:39 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/03 20:37:52 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/05 01:24:11 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ void	build_map(char **map, void *mlx)
 
 int	valid_extension(char *path)
 {
-	int	x;
 	int	path_length;
 
-	x = 0;
 	path_length = ft_strlen(path);
 	return (path[path_length - 1] == 'r' && path[path_length - 2] == 'e'
 		&& path[path_length - 3] == 'b' && path[path_length - 4] == '.');

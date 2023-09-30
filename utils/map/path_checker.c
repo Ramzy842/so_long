@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 08:01:53 by rchahban          #+#    #+#             */
-/*   Updated: 2023/04/04 21:10:39 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/05 01:30:57 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,8 @@ int	exit_path(t_Stack *s, t_Stack *visited, t_Node *popped)
 int	collectible_path(t_Stack *collectibles_stack,
 	t_Stack *visited, t_Node *popped)
 {
-	int		x;
-	int		y;
 	int		collectibles_found;
 
-	x = 0;
-	y = 0;
 	collectibles_found = 0;
 	visited = create_stack();
 	g_properties.collectibles = count_collectibles(g_game.map);

@@ -6,7 +6,7 @@
 /*   By: rchahban <rchahban@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 04:33:31 by rchahban          #+#    #+#             */
-/*   Updated: 2022/11/25 18:02:58 by rchahban         ###   ########.fr       */
+/*   Updated: 2023/04/05 02:22:10 by rchahban         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #  define BUFFER_SIZE 5
 # endif
 
-# include <stdio.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
